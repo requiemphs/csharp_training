@@ -28,8 +28,7 @@ namespace WebAddressbookTests
         private string address2 = "";
         private string phone2 = "";
         private string notes = "";
-        private string bday = "";
-        private string aday = "";
+
 
         public ContactData(string firstname, string lastname)
         {
@@ -293,32 +292,6 @@ namespace WebAddressbookTests
             set
             {
                 notes = value;
-            }
-        }
-
-        public string Bday
-        {
-            get
-            {
-                return bday;
-            }
-
-            set
-            {
-                bday = value;
-            }
-        }
-
-        public string Aday
-        {
-            get
-            {
-                return aday;
-            }
-
-            set
-            {
-                aday = value;
             }
         }
 

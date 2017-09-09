@@ -17,6 +17,52 @@ namespace WebAddressbookTests
         {
         }
 
+        public ContactHelper Remove(int p)
+        {
+            SelectContact(p);
+            RemoveContact();
+            ConfirmRemoveContact();
+            return this;
+        }
+
+        public ContactHelper Modify(int p, ContactData newData)
+        {
+            InitContactModification(p);
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
+        public ContactHelper SubmitContactModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper InitContactModification(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper ConfirmRemoveContact()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
         public ContactHelper Create(ContactData contact)
         {
             InitNewContactCreation();
@@ -72,9 +118,9 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("phone2")).SendKeys(contact.Phone2);
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys(contact.Notes);
-            new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText(contact.Bday);
+            new SelectElement(driver.FindElement(By.Name("bday"))).SelectByText("-");
             new SelectElement(driver.FindElement(By.Name("bmonth"))).SelectByText("-");
-            new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText(contact.Aday);
+            new SelectElement(driver.FindElement(By.Name("aday"))).SelectByText("-");
             new SelectElement(driver.FindElement(By.Name("amonth"))).SelectByText("-");
             return this;
         }

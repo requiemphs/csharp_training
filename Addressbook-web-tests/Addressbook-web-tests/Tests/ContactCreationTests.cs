@@ -13,7 +13,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("Clone", "Newton");
+            ContactData contact = new ContactData("Groot", "Newton");
             applicationManager.Contact.Create(contact);
 
         }
