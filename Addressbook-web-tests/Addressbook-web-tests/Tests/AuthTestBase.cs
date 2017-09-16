@@ -5,17 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-
 namespace WebAddressbookTests
 {
-    public class TestBase
+    public class AuthTestBase : TestBase 
     {
-        protected ApplicationManager applicationManager;
 
         [SetUp]
-        public void SetupApplicationManager()
+        public void SetupLogin()
         {
-            applicationManager = ApplicationManager.GetInstance();
+            applicationManager.Auth.Login(new AccountData("admin", "secret"));
         }
     }
 }

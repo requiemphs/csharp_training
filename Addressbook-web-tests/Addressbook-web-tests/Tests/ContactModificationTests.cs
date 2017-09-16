@@ -10,13 +10,13 @@ namespace WebAddressbookTests
 {
 
     [TestFixture]
-    class ContactModificationTests : TestBase
+    class ContactModificationTests : AuthTestBase
     {
         [Test]
                 public void ContactModificationTest()
         {
             ContactData newData = new ContactData("Миньон", "newData");
-            applicationManager.Contact.Modify(12,newData);
+            applicationManager.Contact.Modify(1,newData);
         }
     }
 }
