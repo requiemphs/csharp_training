@@ -19,9 +19,12 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int p)
         {
+            if (!ContactCreated())
+            {
+                Create(new ContactData("Neew", "Teew"));
+            }
             manager.Navigator.GoToHomePage();
             SelectContact(p);
-
             RemoveContact();
             ConfirmRemoveContact();
             return this;
@@ -29,6 +32,10 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int p, ContactData newData)
         {
+            if (!ContactCreated())
+            {
+                Create(new ContactData("Neew", "Teew"));
+            }
             manager.Navigator.GoToHomePage();
             InitContactModification(p);
             FillContactForm(newData);
