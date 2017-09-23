@@ -19,10 +19,6 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int p)
         {
-            if (!ContactCreated())
-            {
-                Create(new ContactData("Neew", "Teew"));
-            }
             manager.Navigator.GoToHomePage();
             SelectContact(p);
             RemoveContact();
@@ -32,10 +28,6 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int p, ContactData newData)
         {
-            if (!ContactCreated())
-            {
-                Create(new ContactData("Neew", "Teew"));
-            }
             manager.Navigator.GoToHomePage();
             InitContactModification(p);
             FillContactForm(newData);
@@ -59,7 +51,7 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -78,10 +70,19 @@ namespace WebAddressbookTests
         public ContactHelper SelectContact(int index)
         {
 
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
+        public void CheckContactCreated()
+        {
+            if (ContactCreated())
+            {
+                return;
+            }
+            manager.Navigator.GoToHomePage();
+            Create(new ContactData("Neew", "Teew"));
+        }
         public bool ContactCreated()
         {
             return IsElementPresent(By.Name ("selected[]"));

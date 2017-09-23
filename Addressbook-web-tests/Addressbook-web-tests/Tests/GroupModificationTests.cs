@@ -13,10 +13,16 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("15.09");
+            applicationManager.Group.CheckGroupCreated();
+
+            GroupData newData = new GroupData("22.09");
             newData.Header = null;
             newData.Footer = null;
-            applicationManager.Group.Modify(1, newData);
+
+            List<GroupData> oldGroups = applicationManager.Group.GetGroupList();
+            applicationManager.Group.Modify(0, newData);
+            List<GroupData> newGroups = applicationManager.Group.GetGroupList();
+            Assert.AreNotEqual(oldGroups, newGroups);
         }
     }
 }

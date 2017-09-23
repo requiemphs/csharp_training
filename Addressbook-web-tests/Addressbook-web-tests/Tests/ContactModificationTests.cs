@@ -15,8 +15,10 @@ namespace WebAddressbookTests
         [Test]
                 public void ContactModificationTest()
         {
+            applicationManager.Contact.CheckContactCreated();
+
             ContactData newData = new ContactData("Миньон", "newData");
-            applicationManager.Contact.Modify(1,newData);
+            applicationManager.Contact.Modify(0,newData);
         }
     }
 }
