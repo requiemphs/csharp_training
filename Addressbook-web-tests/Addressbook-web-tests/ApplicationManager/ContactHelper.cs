@@ -130,6 +130,18 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+            foreach (IWebElement element in elements)
+            {
+                var tds = element.FindElements(By.CssSelector("td"));
+                contacts.Add(new ContactData( tds[2].Text, tds[1].Text));
+            }
+            return contacts;
+        }
 
     }
 }
