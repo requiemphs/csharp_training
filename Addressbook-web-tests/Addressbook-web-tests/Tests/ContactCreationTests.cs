@@ -15,6 +15,10 @@ namespace WebAddressbookTests
         public void ContactCreationTest()
         {
             ContactData contact = new ContactData("Trix", "Newton");
+            contact.Address = "@@@";
+            contact.Home = "+7(666) 888";
+            contact.Work = "+7(666) 777";
+            contact.Mobile = "+7(666) 666";
 
             List<ContactData> oldContacts = applicationManager.Contact.GetContactList();
 
