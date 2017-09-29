@@ -19,8 +19,10 @@ namespace WebAddressbookTests
             ContactData newData = new ContactData("Миньон", "newData");
 
             List<ContactData> oldContacts = applicationManager.Contact.GetContactList();
-            
+            ContactData oldData = oldContacts[0];
+
             applicationManager.Contact.Modify(0,newData);
+            Assert.AreEqual(oldContacts.Count, applicationManager.Contact.GetContactCount());
 
             List<ContactData> newContacts = applicationManager.Contact.GetContactList();
             oldContacts[0].Firstname = newData.Firstname;
@@ -28,6 +30,14 @@ namespace WebAddressbookTests
             oldContacts.Sort();
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.Id == oldData.Id)
+                {
+                    Assert.AreEqual(newData.Lastname, contact.Lastname);
+                }
+            }
         }
     }
 }

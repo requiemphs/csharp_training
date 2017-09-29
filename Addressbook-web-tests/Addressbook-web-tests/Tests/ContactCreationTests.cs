@@ -14,11 +14,13 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            ContactData contact = new ContactData("Groot", "Newton");
+            ContactData contact = new ContactData("Trix", "Newton");
 
             List<ContactData> oldContacts = applicationManager.Contact.GetContactList();
 
             applicationManager.Contact.Create(contact);
+
+            Assert.AreEqual(oldContacts.Count + 1, applicationManager.Contact.GetContactCount());
 
             List<ContactData> newContacts = applicationManager.Contact.GetContactList();
 
