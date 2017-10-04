@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace WebAddressbookTests
 {
@@ -15,7 +16,11 @@ namespace WebAddressbookTests
         {
             Firstname = firstname;
             Lastname = lastname;
-        }        
+        }
+
+        public ContactData()
+        {
+        }
 
         public bool Equals(ContactData other)
         {
@@ -85,7 +90,7 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
         }
 
         public string Email { get; set; }
@@ -102,13 +107,21 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return Email + "\r\n" + Email2 + "\r\n" + Email3;
+                    return CleanUpEmail(Email) +  CleanUpEmail(Email2) + CleanUpEmail(Email3).Trim();
                 }
             }
             set
             {
                 allEmails = value;
             }
+        }
+        private string CleanUpEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email + "\r\n";
         }
 
         public string Homepage { get; set; }
@@ -118,5 +131,6 @@ namespace WebAddressbookTests
         public string Phone2 { get; set; }
         public string Notes { get; set; }
         public string Id { get; set; }
+
     }
 }
