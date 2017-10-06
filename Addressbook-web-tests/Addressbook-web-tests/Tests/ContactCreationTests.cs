@@ -11,15 +11,26 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactCreationTests : AuthTestBase
     {
-        [Test]
-        public void ContactCreationTest()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
-            ContactData contact = new ContactData("Trix", "Newton");
-            contact.Address = "@@@";
-            contact.Home = "+7(666) 888";
-            contact.Work = "+7(666) 777";
-            contact.Mobile = "+7(666) 666";
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 3; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(30), GenerateRandomString(30))
+                {
 
+                    Address = GenerateRandomString(100),
+                    Home = GenerateRandomString(9),
+                    Mobile = GenerateRandomString(9),
+                    Email = GenerateRandomString(9)
+                });
+            }
+            return contacts;
+        }
+
+        [Test, TestCaseSource("RandomContactDataProvider")]
+        public void ContactCreationTest(ContactData contact)
+        {
             List<ContactData> oldContacts = applicationManager.Contact.GetContactList();
 
             applicationManager.Contact.Create(contact);
