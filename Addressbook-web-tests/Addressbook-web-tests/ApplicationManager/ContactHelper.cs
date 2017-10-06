@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
@@ -182,8 +181,14 @@ namespace WebAddressbookTests
             InitContactModification(0);
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
 
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
@@ -194,7 +199,12 @@ namespace WebAddressbookTests
 
             return new ContactData(firstName, lastName)
             {
+                Company = company,
+                Title = title,
+                Nickname = nickName,
+                Middlename = middleName,
                 Address = address,
+                Fax = fax,
                 Home = homePhone,
                 Mobile = mobilePhone,
                 Work = workPhone,
@@ -222,6 +232,17 @@ namespace WebAddressbookTests
             };
         }
 
+        public ContactData GetContactInformationFromDetails()
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactDetails(0);
+            var allInformation = driver.FindElement(By.Id("content")).Text;
+            return new ContactData()
+            {
+                AllInformation  = allInformation
+            };
+        }
+
         public int GetNumberOfSearchResults()
         {
             manager.Navigator.GoToHomePage();
@@ -229,5 +250,6 @@ namespace WebAddressbookTests
             Match m =  new Regex(@"\d+").Match(text);
             return Int32.Parse(m.Value);
         }
+
     }
 }
