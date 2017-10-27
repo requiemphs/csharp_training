@@ -293,11 +293,29 @@ namespace WebAddressbookTests
                 .Until(d => driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
         }
 
+        public void RemoveContactFromGroup(ContactData contact, GroupData @group)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectGroupToRemove(group.Name);
+            SelectContact(contact.Id);
+            CommitRemovingContactToGroup();
+
+        }
+
+        private void CommitRemovingContactToGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
         public void CommitAddingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
         }
 
+        public void SelectGroupToRemove(string groupName)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(groupName);
+        }
         public void SelectGroupToAdd(string groupName)
         {
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(groupName);
@@ -310,5 +328,7 @@ namespace WebAddressbookTests
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
+
+
     }
 }
