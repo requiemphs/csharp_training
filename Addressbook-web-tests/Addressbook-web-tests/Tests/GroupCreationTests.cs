@@ -16,7 +16,7 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase 
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {
@@ -88,13 +88,13 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromJsonFile")]
         public void GroupCreationTest(GroupData group)
         {
-            List<GroupData> oldGroups = applicationManager.Group.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
 
             applicationManager.Group.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, applicationManager.Group.GetGroupCount());
 
-            List<GroupData> newGroups =  applicationManager.Group.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
             oldGroups.Add(group);
             oldGroups.Sort();
@@ -122,17 +122,10 @@ namespace WebAddressbookTests
         [Test]
         public void TestDBConnectivity()
         {
-            DateTime start = DateTime.Now;
-            List<GroupData> fromUi =  applicationManager.Group.GetGroupList();
-            DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
-
-            start = DateTime.Now;
-            AddressBookDB db = new AddressBookDB();
-            List<GroupData> fromDb = (from g in db.Groups select g).ToList();
-            db.Close();
-            end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
+            foreach (ContactData contact in ContactData.GetAll())
+            {
+                System.Console.Out.WriteLine(contact.Deprecated);
+            }
         }
 
     }

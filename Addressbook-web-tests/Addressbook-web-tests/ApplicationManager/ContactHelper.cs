@@ -27,10 +27,28 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Remove(ContactData contact)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(contact.Id);
+            RemoveContact();
+            ConfirmRemoveContact();
+            return this;
+        }
+
         public ContactHelper Modify(int p, ContactData newData)
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(p);
+            FillContactForm(newData);
+            SubmitContactModification();
+            return this;
+        }
+
+        public ContactHelper Modify(ContactData contact, ContactData newData)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(contact.Id);
             FillContactForm(newData);
             SubmitContactModification();
             return this;
@@ -57,6 +75,12 @@ namespace WebAddressbookTests
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
+        }
+
+        public ContactHelper InitContactModification(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '" + id + "'])")).FindElement(By.XPath("(//img[@alt='Edit'])")).Click();
+            return this;
         }
 
         public void InitContactDetails(int index)
@@ -89,6 +113,13 @@ namespace WebAddressbookTests
         {
 
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(String id)
+        {
+
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value = '"+id+"'])")).Click();
             return this;
         }
 
@@ -251,5 +282,33 @@ namespace WebAddressbookTests
             return Int32.Parse(m.Value);
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData @group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string groupName)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(groupName);
+        }
+        //public void SelectContact(string contactId)
+        //{
+        //    driver.FindElement(By.Id(contactId)).Click();
+        //}
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
     }
 }

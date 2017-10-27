@@ -70,10 +70,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\AddressbookDB.cs" />
+    <Compile Include="Model\GroupContactRalation.cs" />
+    <Compile Include="Tests\AddingContactToGroupTests.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\ContactModificationTests.cs" />
     <Compile Include="Tests\ContactRemovalTests.cs" />
+    <Compile Include="Tests\ContactTestBase.cs" />
     <Compile Include="Tests\GroupModificationTests.cs" />
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="ApplicationManager\ApplicationManager.cs" />
@@ -84,6 +87,7 @@
     <Compile Include="ApplicationManager\HelperBase.cs" />
     <Compile Include="ApplicationManager\LoginHelper.cs" />
     <Compile Include="ApplicationManager\NavigationHelper.cs" />
+    <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\LoginTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\TestBase.cs" />

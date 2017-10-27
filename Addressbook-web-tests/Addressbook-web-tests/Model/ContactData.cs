@@ -18,16 +18,18 @@ namespace WebAddressbookTests
         private string rnAllEmails;
         private string fullName;
 
+        public ContactData()
+        {
+
+        }
+
         public ContactData(string firstname, string lastname)
         {
             Firstname = firstname;
             Lastname = lastname;
         }
 
-        public ContactData()
-        {
-            AllInformation = allInformation;
-        }
+
 
         public bool Equals(ContactData other)
         {
@@ -122,6 +124,9 @@ namespace WebAddressbookTests
 
         [Column(Name = "fax")]
         public string Fax { get; set; }
+
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; }
 
         public string AllPhones
         {
@@ -287,6 +292,14 @@ namespace WebAddressbookTests
                 return "";
             }
             return allInformation + "\r\n";
+        }
+
+        public static List<ContactData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts.Where(x => x.Deprecated == "0000-00-00 00:00:00") select c).ToList();
+            }
         }
     }
 }
